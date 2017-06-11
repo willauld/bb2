@@ -180,6 +180,9 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			header( 'Connection: keep-alive' );
 			ini_set( 'default_socket_timeout', '3600' );
 			set_time_limit( '3600' );
+			//ini_set( 'default_socket_timeout', '0' ); //WGA
+			//set_time_limit( '0' ); //WGA
+      //ini_set('display_errors','Off');//WGA added 
 			
 			// Determine the current step.
 			if ( ( isset( $_GET['step'] ) ) && ( is_numeric( $_GET['step'] ) ) ) {
@@ -222,7 +225,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 		function log( $text, $log_type = 'all' ) {
 			$write = false;
 			
-			if ( $this->_options['log_level'] == 0 ) { // No logging.
+			if ( $this->_options['log_level'] == 0 ) { // No logging. 
 				return;
 			} elseif ( $this->_options['log_level'] == 1 ) { // Errors only.
 				if ( $log_type == 'error' ) {
@@ -614,7 +617,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			
 			// Migrate DATABASE if not disabled.
 			if ( false === $this->_options['skip_database_migration'] ) {
-				$failed = !$this->migrate_database();
+				$failed = !$this->migrate_database(); //WGA need to allow for continue
 			} else {
 				$failed = false;
 				echo 'Skipping database migration based on settings.<br>';
@@ -636,8 +639,17 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 				echo '<input type="hidden" name="options" value="' . htmlspecialchars( serialize( $this->_options ) ) . '" />';
 				echo '<br><br><input type="submit" name="submit" class="button-secondary" value="Delete import & migration files &raquo" />';
 				echo '</form>';
-			} else {
+      }else if (true === $failed ){
 				echo '<b>Restore failed. Please use your back button to correct any errors.</b>';
+			} else {
+         //WGA added to continue migration piece here
+					echo '<div class="alert">';
+					echo 'Migration timed out.</div><br><br>';
+					echo 'Please keep continuing to see if it will complete. This may take a few steps.';
+					echo '<form action="?step=5&db_continue=' . $import_result . '" method=post>';
+					echo '<input type="hidden" name="options" value="' . htmlspecialchars( serialize( $this->_options ) ) . '" />';
+					echo '<br><br><input type="submit" name="submit" class="button-secondary" value="Continue Migration &raquo" />';
+					echo '</form>';
 			}
 		}
 
@@ -1140,6 +1152,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 		function migrate_database() {
 			$this->log( 'Beginning migration of DB.' );
 			$this->log( '_options[] value: ' . serialize( $this->_options ) );
+			$this->time_start = microtime( true ); // WGA added
 			
 			$old_abspath = $this->_backupdata['abspath'];
 			//$old_abspath = str_replace( '\\', '\\\\', $this->_backupdata['abspath'] ); // Remove escaping of windows paths. - Caused problems. REMOVE?
@@ -1285,6 +1298,16 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 						
 					}
 				} // end non-posts table updating.
+
+        //WGA check time and see if should return with continue
+			  // If we are half maximum PHP runtime then stop here so that it can be picked up in another PHP process...
+			  if ( ( microtime( true ) - $this->time_start ) >= ($this->_options['max_execution_time']/2) ) {
+				  //$count_tables_checked++;
+						echo ' Exhausted available PHP time to migrate (search/replace) for this page load... Stopped after query ' . $count_tables_checked . '. ';
+						$this->log( 'Database too large to migrate in one pass. Breaking into chunks and continuing at query ' . ( $count_tables_checked ) );
+						
+						return ( $count_tables_checked );
+        }
 			}
 			
 			unset( $main_result );
@@ -2062,20 +2085,20 @@ $PluginBuddyImportBuddy = new PluginBuddyImportBuddy();
 
 class ezimg {
 
-	 function genImageTag($name){
+	 public static function genImageTag($name){//WGA added "public static"
 	  $image = ezimg::getImgData($name);     
 	  $result = "<img src='?ezimg={$name}' alt='' width='{$image['width']}' height='{$image['height']}' border='0' />";
 	  return $result;
 	 }
 	 
-	 function showImg($name){ 
+	 public static function showImg($name){ 
 	  $image = ezimg::getImgData($name); 
 	  header("Content-type: image/{$image['type']}");
 	  echo gzuncompress(base64_decode(str_replace(' ', '', $image['code'])));
 	  exit;	  
 	 }
 
-	 function getImgData($name){
+	 public static function getImgData($name){
 	  $images = array(
 	   'blank.gif' => array( 
 		 'type'=>'gif', 'width'=>'1', 'height'=>'1',
