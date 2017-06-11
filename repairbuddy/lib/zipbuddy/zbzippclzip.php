@@ -213,7 +213,7 @@ if ( !class_exists( "pluginbuddy_zbzippclzip" ) ) {
 					
 					foreach ( $exclusions as $exclude ) {
 					
-						if ( !strstr( $exclude, 'backupbuddy_backups' ) ) { // Set variable to show we are excluding additional directories besides backup dir.
+						if ( !strstr( $exclude, 'bb2_backups' ) ) { // Set variable to show we are excluding additional directories besides backup dir.
 	
 							$excluding_additional = true;
 								

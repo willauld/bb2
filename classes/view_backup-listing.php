@@ -284,7 +284,7 @@ $pluginbuddy_backupbuddy_backup->trim_old_archives();
 						<tr class="entry-row alternate">
 							<th scope="row" class="check-column"><input type="checkbox" name="files[]" class="entries" value="<?php echo $file[ 'filename' ]; ?>" /></th>
 							<td>
-								<?php echo '<a href="'. site_url() . '/wp-content/uploads/backupbuddy_backups/' . $file['filename'] . '" title="', __('Click to download this backup.', 'it-l10n-backupbuddy'),'">' . $file['filename'] . '</a>' ?>
+								<?php echo '<a href="'. site_url() . '/wp-content/uploads/bb2_backups/' . $file['filename'] . '" title="', __('Click to download this backup.', 'it-l10n-backupbuddy'),'">' . $file['filename'] . '</a>' ?>
 								<div class="row-actions" style="margin:0; padding:0;">
 									<a href="<?php echo admin_url('admin-ajax.php') . '?action=pb_backupbuddy_remotedestination&callback_data=' . urlencode( $file['filename'] ); ?>&#038;TB_iframe=1&#038;width=640&#038;height=600" class="thickbox" style="margin-top: 3px;" title="<?php _e('Send this file to a remote destination such as Amazon S3, Email, FTP, or Rackspace Cloud.', 'it-l10n-backupbuddy'); ?>"><?php _e('Send file offsite', 'it-l10n-backupbuddy');?></a> |
 									<a href="<?php echo admin_url('admin-ajax.php') . '?action=pb_backupbuddy_md5hash&file=' . urlencode( $file['filename'] ); ?>&#038;TB_iframe=1&#038;width=640&#038;height=400" class="thickbox" style="margin-top: 3px;" title="<?php _e('Allows you to later verify the backup file has been unchanged.', 'it-l10n-backupbuddy');?>"><?php _e('MD5 Checksum', 'it-l10n-backupbuddy');?></a>

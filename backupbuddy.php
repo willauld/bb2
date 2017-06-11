@@ -1,11 +1,12 @@
 <?php
 /**
  *
- * Plugin Name: BackupBuddyWGA
+ * Plugin Name: bb2
  * Plugin URI: http://pluginbuddy.com/backupbuddy/
- * Description: Backup - Restore - Migrate. Backs up files, settings, and content for a complete snapshot of your site. Allows migration to a new host or URL.
+ * Description: Backup - Restore - Migrate. Backs up files, settings, and content for a complete snapshot of your site. Allows migration to a new host or URL. BB2 was forked from backupbuddy v2.2.29.
  * Version: 2.2.29
- * Author: The PluginBuddy Team
+ * Author: The PluginBuddy Team, WGA from fork
+
  * Author URI: http://pluginbuddy.com
  *
  * Installation:
@@ -21,20 +22,22 @@
  *
  */
 
+ //TODO: FIXME: WGA: lots of hard coded "bb2_backup" that need to use the variable 'backup_directory'
+
 if (!class_exists("pluginbuddy_backupbuddy")) {
 	class pluginbuddy_backupbuddy {
 		var $_version = '2.2.29';
 		var $_updater = '1.0.7';									// Deprecated variable. Use $this->plugin_info( 'version' ).
 		var $_url = 'http://pluginbuddy.com/backupbuddy/';			// Deprecated variable. Purchase URL. Use $this->plugin_info( 'url' ).
-		var $_var = 'pluginbuddy_backupbuddy';						// Deprecared variable. Use $this->_slug.
+		var $_var = 'bb2';											// Deprecared variable. Use $this->_slug.
 		
 		var $_wp_minimum = '3.0.0';
 		var $_php_minimum = '5.2';
 		
-		var $_slug = 'pluginbuddy_backupbuddy';						// Format: pluginbuddy-pluginnamehere. All lowecase, no dashes.
-		var $_name = 'BackupBuddy';									// Pretty plugin name. Only used for display so any format is valid.
+		var $_slug = 'bb2';											// Format: All lowecase, no dashes.
+		var $_name = 'BB2';											// Pretty plugin name. Only used for display so any format is valid.
 		var $_series = '';											// Series name if applicable.
-		var $_timestamp = 'M j, Y H:i:s';								// PHP timestamp format.
+		var $_timestamp = 'M j, Y H:i:s';							// PHP timestamp format.
 		var $_defaults = array(
 			'data_version'				=>		'2',				// Data structure version. Added BB 2.0 to ease updating.
 			'import_password'			=>		'',					// Importbuddy password.
@@ -205,9 +208,14 @@ if (!class_exists("pluginbuddy_backupbuddy")) {
 				$this->load();
 			}
 			
-			if ( $this->_options['backup_directory'] != ( ABSPATH . 'wp-content/uploads/backupbuddy_backups/' ) ) {
-				$this->_options['backup_directory'] = ABSPATH . 'wp-content/uploads/backupbuddy_backups/';
+			if ( $this->_options['backup_directory'] != ( ABSPATH . 'wp-content/uploads/bb2_backups/' ) ) {
+				$this->_options['backup_directory'] = ABSPATH . 'wp-content/uploads/bb2_backups/';
 				$this->save();
+			}
+			//WGA added this
+			$tmp = $this->create_backup_directory();
+			if ( $temp ===  true) {
+				echo "life is good WGA\n";
 			}
 		}
 		
@@ -534,6 +542,7 @@ if (!class_exists("pluginbuddy_backupbuddy")) {
 		 */
 		function activate() {
 			// Migrate storage location for settings from pre-2.0 to post-2.0 location.
+            /*
 			$upgrade_options = get_option( 'ithemes-backupbuddy' );
 			if ( $upgrade_options != false ) {
 				$this->_options = $upgrade_options;
@@ -620,6 +629,7 @@ if (!class_exists("pluginbuddy_backupbuddy")) {
 				
 				delete_option( 'ithemes-backupbuddy' );
 			}
+			*/ // WGA I don't this this is needed'
 			
 			$this->save();
 			$this->verify_backup_directory();
@@ -729,12 +739,12 @@ if (!class_exists("pluginbuddy_backupbuddy")) {
 				return $messages;
 			}
 			$fullbackup = esc_url( add_query_arg( array(
-					'page' => 'pluginbuddy_backupbuddy-backup',
+					'page' => 'pluginbuddy_backupbuddy-backup', //WGA should this be 'bb2-back'
 					'run_backup' => 'full'
 				), $admin_url
 			) );
 			$dbbackup = esc_url( add_query_arg( array(
-					'page' => 'pluginbuddy_backupbuddy-backup',
+					'page' => 'pluginbuddy_backupbuddy-backup',//WGA shuld this be 'bb2-backup'????
 					'run_backup' => 'db'
 				), $admin_url
 			) );
@@ -928,7 +938,7 @@ if (!class_exists("pluginbuddy_backupbuddy")) {
 			
 			require_once( $this->_pluginPath . '/lib/s3/s3.php');
 			$s3 = new S3( $accesskey, $secretkey);
-			$s3->getObject($bucket, $directory . $s3file, ABSPATH . 'wp-content/uploads/backupbuddy_backups/' . $s3file );
+			$s3->getObject($bucket, $directory . $s3file, ABSPATH . 'wp-content/uploads/bb2_backups/' . $s3file );
 		}
 		
 		// Copy Dropbox backup to local backup directory
@@ -946,7 +956,7 @@ if (!class_exists("pluginbuddy_backupbuddy")) {
 			}
 			
 			$this->log( 'About to get object (the file) from Dropbox cron.' );
-			file_put_contents( ABSPATH . 'wp-content/uploads/backupbuddy_backups/' . basename( $file ), $dropbuddy->get_file( $file ) );
+			file_put_contents( ABSPATH . 'wp-content/uploads/bb2_backups/' . basename( $file ), $dropbuddy->get_file( $file ) );
 		}
 		
 		// Copy Rackspace backup to local backup directory
@@ -964,7 +974,7 @@ if (!class_exists("pluginbuddy_backupbuddy")) {
 			
 			// Get file from Rackspace
 			$rsfile = $container->get_object( $rs_backup );
-			$fso = fopen( ABSPATH . 'wp-content/uploads/backupbuddy_backups/' . $rs_backup, 'w' );
+			$fso = fopen( ABSPATH . 'wp-content/uploads/bb2_backups/' . $rs_backup, 'w' );
 			$rsfile->stream($fso);
 			fclose($fso);
 		}
@@ -981,7 +991,7 @@ if (!class_exists("pluginbuddy_backupbuddy")) {
 			$login_result = ftp_login( $conn_id, $ftp_username, $ftp_password );
 		
 			// try to download $server_file and save to $local_file
-			$local_file = ABSPATH . 'wp-content/uploads/backupbuddy_backups/' . $backup;
+			$local_file = ABSPATH . 'wp-content/uploads/bb2_backups/' . $backup;
 			if ( ftp_get( $conn_id, $local_file, $ftp_directory . $backup, FTP_BINARY ) ) {
 			    echo __('Successfully written to', 'it-l10n-backupbuddy') ." $local_file\n";
 			} else {
@@ -1589,7 +1599,7 @@ if (!class_exists("pluginbuddy_backupbuddy")) {
 			
 			// Create backup file
 			$testbackup = $container->create_object( $rs_file );
-			if ( $testbackup->load_from_filename( ABSPATH . 'wp-content/uploads/backupbuddy_backups/' . $rs_file ) ) {
+			if ( $testbackup->load_from_filename( ABSPATH . 'wp-content/uploads/bb2_backups/' . $rs_file ) ) {
 				// Start remote backup limit
 				if ( $limit > 0 ) {
 					$bkupprefix = $this->backup_prefix();

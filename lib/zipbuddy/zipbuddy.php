@@ -159,7 +159,7 @@ if ( !class_exists( "pluginbuddy_zipbuddy" ) ) {
 						//$exclude = preg_replace( '|[/\\\\]$|', '', $exclude );
 						$exclude = trim( $exclude, "\n\r\0" );
 						if ( $exclude != '' ) {
-							if ( !strstr( $exclude, 'backupbuddy_backups' ) ) { // Set variable to show we are excluding additional directories besides backup dir.
+							if ( !strstr( $exclude, 'bb2_backups' ) ) { // Set variable to show we are excluding additional directories besides backup dir.
 								$excluding_additional = true;
 							}
 							

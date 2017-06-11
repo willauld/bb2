@@ -669,7 +669,7 @@ if ( !class_exists( "pluginbuddy_backupbuddy_backup" ) ) {
 			wp_schedule_single_event( ( time() + ( 12 * 60 * 60 ) ), $this->_parent->_var . '-cron_final_cleanup', array( $this->_backup['serial'] ) );
 			
 			$this->status( 'message', __('Finished cleaning up.', 'it-l10n-backupbuddy') );
-			$this->status( 'action', 'archive_url^' . site_url() . '/wp-content/uploads/backupbuddy_backups/' . basename( $this->_backup['archive_file'] ) );
+			$this->status( 'action', 'archive_url^' . site_url() . '/wp-content/uploads/bb2_backups/' . basename( $this->_backup['archive_file'] ) );
 			
 			if ( $this->_backup['backup_mode'] == '1' ) {
 				$stats = stat( $this->_backup['archive_file'] );

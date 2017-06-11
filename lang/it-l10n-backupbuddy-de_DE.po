@@ -1867,8 +1867,8 @@ msgid "Due to the way schedules are triggered in WordPress someone must visit yo
 msgstr "Bedingt durch die Art und Weise wie Backups in WordPress ausgeführt werden, muss jemand Ihre Seite besuchen,<br /> damit geplante Backups ausgeführt werden. Wenn keine Besuche stattfinden kann es sein dass manche Zeitpläne nicht erfüllt werden."
 
 #: classes/view_settings.php:42
-msgid "You cannot exclude /wp-content/ or /wp-content/uploads/.  However, you may exclude subdirectories within these. The backupbuddy_backups directory is also automatically excluded and cannot be added to exclusion list."
-msgstr "Die Verzeichnisse /wp-content/ oder /wp-content/uploads/ können nicht ausgeschlossen werden, deren Unterverzeichnisse aber schon. Das Speicher-Verzeichnis der Backups (backupbuddy_backups) wird automatisch ausgeschlossen und kann nicht zur Ausschluss-Liste hinzugefügt werden."
+msgid "You cannot exclude /wp-content/ or /wp-content/uploads/.  However, you may exclude subdirectories within these. The bb2_backups directory is also automatically excluded and cannot be added to exclusion list."
+msgstr "Die Verzeichnisse /wp-content/ oder /wp-content/uploads/ können nicht ausgeschlossen werden, deren Unterverzeichnisse aber schon. Das Speicher-Verzeichnis der Backups (bb2_backups) wird automatisch ausgeschlossen und kann nicht zur Ausschluss-Liste hinzugefügt werden."
 
 #: classes/view_settings.php:140
 msgid "Email Notifications"

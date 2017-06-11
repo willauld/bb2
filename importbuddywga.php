@@ -180,8 +180,8 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			header( 'Connection: keep-alive' );
 			ini_set( 'default_socket_timeout', '3600' );
 			set_time_limit( '3600' );
-			ini_set( 'default_socket_timeout', '0' );
-			set_time_limit( '0' );
+			//ini_set( 'default_socket_timeout', '0' ); //WGA
+			//set_time_limit( '0' ); //WGA
       //ini_set('display_errors','Off');//WGA added 
 			
 			// Determine the current step.
@@ -642,7 +642,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
       }else if (true === $failed ){
 				echo '<b>Restore failed. Please use your back button to correct any errors.</b>';
 			} else {
-         //WGA added to continue migration
+         //WGA added to continue migration piece here
 					echo '<div class="alert">';
 					echo 'Migration timed out.</div><br><br>';
 					echo 'Please keep continuing to see if it will complete. This may take a few steps.';
@@ -1300,10 +1300,10 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 				} // end non-posts table updating.
 
         //WGA check time and see if should return with continue
-			  // If we are within 1 second of reaching maximum PHP runtime then stop here so that it can be picked up in another PHP process...
-			  if ( ( ( microtime( true ) - $this->time_start ) + 1 ) >= ($this->_options['max_execution_time']/2) ) {
+			  // If we are half maximum PHP runtime then stop here so that it can be picked up in another PHP process...
+			  if ( ( microtime( true ) - $this->time_start ) >= ($this->_options['max_execution_time']/2) ) {
 				  //$count_tables_checked++;
-						echo ' Exhausted available PHP time to import for this page load... Stopped after query ' . $count_tables_checked . '. ';
+						echo ' Exhausted available PHP time to migrate (search/replace) for this page load... Stopped after query ' . $count_tables_checked . '. ';
 						$this->log( 'Database too large to migrate in one pass. Breaking into chunks and continuing at query ' . ( $count_tables_checked ) );
 						
 						return ( $count_tables_checked );
