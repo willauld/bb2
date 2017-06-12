@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>BackupBuddy importbuddy.php by PluginBuddy.com</title>
+		<title>BackupBuddy importbb2.php by PluginBuddy.com</title>
 	</head>
 	<link rel="stylesheet" type="text/css" href="importbuddy/css/style.css" />
 	<script src="importbuddy/js/jquery.js" type="text/javascript"></script>

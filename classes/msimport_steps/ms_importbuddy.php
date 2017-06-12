@@ -48,11 +48,10 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 		 */
 		function PluginBuddyImportBuddy( $parent ) {
 			$this->_parent = $parent;
-			// Prevent access to importbuddy.php if it is still in plugin directory.
-			if ( file_exists( dirname( __FILE__ ) . '/backupbuddy.php' ) ) {
-				echo 'The BackupBuddy importer, ImportBuddy, can ONLY be accessed on the destination server that you wish to import your backup to.<br>';
+			// Prevent access to importbb2.php if it is still in plugin directory.
+			if ( file_exists( dirname( __FILE__ ) . '/backupbb2.php' ) ) {
+				echo 'The BB2 importer, Importbb2, can ONLY be accessed on the destination server that you wish to import your backup to.<br>';
 				echo 'Upload the importer in the root web directory on the destination server and try again.<br><br>';
-				echo 'If you need assistance visit <a href="http://pluginbuddy.com">http://pluginbuddy.com</a>';
 				die();
 			}
 						
@@ -260,7 +259,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 					<span class="toggle button-secondary" id="advanced">Advanced Troubleshooting Options</span>
 					<div id="toggle-advanced" class="toggled">
 						<b>WARNING: Advanced use only. Use only if directed by support. Improper use may result in lost data (or worse).</b><br><br>
-						<input type="checkbox" name="skip_files" /> Skip zip file extraction. <?php $this->tip( 'Checking this box will result in importbuddy.php NOT extracting/unzipping your backup ZIP file for you.  You will need to manually extract it either on your local computer then upload it or using a server-based tool such as cPanel to extract it. This feature is useful if your host cannot extract the ZIP file for some reason or is timing out.' ); ?><br>
+						<input type="checkbox" name="skip_files" /> Skip zip file extraction. <?php $this->tip( 'Checking this box will result in importbb2.php NOT extracting/unzipping your backup ZIP file for you.  You will need to manually extract it either on your local computer then upload it or using a server-based tool such as cPanel to extract it. This feature is useful if your host cannot extract the ZIP file for some reason or is timing out.' ); ?><br>
 						<input type="checkbox" name="wipe_database" onclick="
 							if ( !confirm( 'WARNING! WARNING! WARNING! WARNING! WARNING! \n\nThis will clear any existing WordPress installation or other content in this database. This could result in loss of posts, comments, pages, settings, and other software data loss. Verify you are using the exact database settings you want to be using. PluginBuddy & all related persons hold no responsibility for any loss of data caused by using this option. \n\n Are you sure you want to do this and potentially wipe existing data? \n\n WARNING! WARNING! WARNING! WARNING! WARNING!' ) ) {
 								return false;
@@ -281,7 +280,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 							<option value="1" selected>Errors Only (default)</option>
 							<option value="2">Errors & Warnings</option>
 							<option value="3">Everything (debug mode)</option>
-						</select> <?php $this->tip( 'Errors and other debugging information will be written to importbuddy.txt in the same directory as importbuddy.php.  This is useful for debugging any problems encountered during import.  Support may request this file to aid in tracking down any problems or bugs.' ); ?>
+						</select> <?php $this->tip( 'Errors and other debugging information will be written to importbuddy.txt in the same directory as importbb2.php.  This is useful for debugging any problems encountered during import.  Support may request this file to aid in tracking down any problems or bugs.' ); ?>
 					</div>
 				</div>
 				<?php
@@ -879,7 +878,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 					echo 'Import';
 				}
 				echo ' Complete!</div><br><br>';
-				echo 'Verify site functionality then delete the backup ZIP file and importbuddy.php from your site root. Leaving these files is a security risk. Leaving the zip file and then subsequently running a BackupBuddy backup will result in excessively large backups as this zip file will be included.';
+				echo 'Verify site functionality then delete the backup ZIP file and importbb2.php from your site root. Leaving these files is a security risk. Leaving the zip file and then subsequently running a BackupBuddy backup will result in excessively large backups as this zip file will be included.';
 
 				echo '<form action="?step=7" method=post>';
 				echo '<input type="hidden" name="options" value="' . htmlspecialchars( serialize( $this->_options ) ) . '" />';
@@ -898,7 +897,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			
 			$this->remove_file( $this->_options['file'], 'backup .ZIP file (' . $this->_options['file'] . ')', true );
 			
-			$this->remove_file( 'importbuddy.php', 'importbuddy.php (this script)', true );
+			$this->remove_file( 'importbb2.php', 'importbb2.php (this script)', true );
 			
 			$this->remove_file( 'importbuddy.txt', 'importbuddy.txt log file', true );
 			
@@ -1608,7 +1607,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 		function print_html_header() {
 			?><html>
 				<head>
-					<title>BackupBuddy importbuddy.php by PluginBuddy.com</title>
+					<title>BackupBuddy importbb2.php</title>
 				</head>
 				<style type="text/css">
 					body {
@@ -1759,7 +1758,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 						});
 						jQuery('#ithemes_mysql_test').click(function(e) {
 							jQuery('#ithemes_loading').show();
-							jQuery.post('importbuddy.php', { action: "mysql_test", server: jQuery('#mysql_server').val(), name: jQuery('#mysql_name').val(), user: jQuery('#mysql_user').val(), pass: jQuery('#mysql_password').val(), prefix: jQuery('#mysql_prefix').val() }, 
+							jQuery.post('importbb2.php', { action: "mysql_test", server: jQuery('#mysql_server').val(), name: jQuery('#mysql_name').val(), user: jQuery('#mysql_user').val(), pass: jQuery('#mysql_password').val(), prefix: jQuery('#mysql_prefix').val() }, 
 								function(data) {
 									//alert(data);
 									jQuery('#ithemes_loading').html( data );
@@ -1929,7 +1928,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			$phpinfo = $this->phpinfo_array();
 			if ( strpos( $phpinfo['PHP Core']['disable_functions'], 'exec') != true ) { // If exec is not explicitly disabled in PHP...
 				$command = 'unzip -qo'; // q = quiet, o = overwrite without prompt.
-				$command .= " '$file' -d '$directory' -x 'importbuddy.php'"; // x excludes importbuddy script to prevent overwriting newer importbuddy on extract step.
+				$command .= " '$file' -d '$directory' -x 'importbb2.php'"; // x excludes importbuddy script to prevent overwriting newer importbuddy on extract step.
 
 				if ( file_exists( $this->_options[ 'extract_to' ] . '\unzip.exe' ) ) {
 					$this->alert( 'Attempting to use provided unzip.exe for Windows zip functionality.' );

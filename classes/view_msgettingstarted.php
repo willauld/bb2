@@ -77,11 +77,6 @@ if ( isset( $_GET['pb_backupbuddy_alt_cron'] ) ) {
 			
 			
 			
-			<h3><?php _e('Version History', 'it-l10n-backupbuddy');?></h3>
-			<textarea rows="7" cols="70"><?php readfile( $this->_parent->_pluginPath . '/history.txt' ); ?></textarea>
-			<br /><br />
-			
-				
 			<br /><br /><br />
 			<a href="http://pluginbuddy.com" style="text-decoration: none;"><img src="<?php echo $this->_pluginURL; ?>/images/pluginbuddy.png" style="vertical-align: -3px;" /> PluginBuddy.com</a><br /><br />
 		</div>

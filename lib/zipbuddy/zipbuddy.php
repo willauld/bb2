@@ -177,7 +177,7 @@ if ( !class_exists( "pluginbuddy_zipbuddy" ) ) {
 					}
 				}
 				
-				$command .= ' "/importbuddy.php"';
+				$command .= ' "/importbb2.php"';
 				
 				if ( $excluding_additional === true ) {
 					$this->status( 'message', __( 'Excluding archives directory and additional directories defined in settings.', 'it-l10n-backupbuddy' ) . ' ' . $exclude_count . ' ' . __( 'total', 'it-l10n-backupbuddy' ) . '.' );
@@ -344,7 +344,7 @@ if ( !class_exists( "pluginbuddy_zipbuddy" ) ) {
 				$this->status( 'details',  'Starting highspeed extraction (exec)... This may take a moment...' );
 				
 				$command = 'unzip -qo'; // q = quiet, o = overwrite without prompt.
-				$command .= " '$zip_file' -d '$destination_directory' -x 'importbuddy.php'"; // x excludes importbuddy script to prevent overwriting newer importbuddy on extract step.
+				$command .= " '$zip_file' -d '$destination_directory' -x 'importbb2.php'"; // x excludes importbuddy script to prevent overwriting newer importbuddy on extract step.
 			
 				// Handle windows.
 				if ( stristr( PHP_OS, 'WIN' ) && !stristr( PHP_OS, 'DARWIN' ) ) { // Running Windows. (not darwin)

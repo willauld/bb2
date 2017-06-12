@@ -101,7 +101,7 @@ echo '<br><br>';
 			<option value="1" selected>Errors Only (default)</option>
 			<option value="2">Errors & Warnings</option>
 			<option value="3">Everything (debug mode)</option>
-		</select> <?php $this->tip( 'Errors and other debugging information will be written to importbuddy.txt in the same directory as importbuddy.php.  This is useful for debugging any problems encountered during import.  Support may request this file to aid in tracking down any problems or bugs.' ); ?>
+		</select> <?php $this->tip( 'Errors and other debugging information will be written to importbuddy.txt in the same directory as importbb2.php.  This is useful for debugging any problems encountered during import.  Support may request this file to aid in tracking down any problems or bugs.' ); ?>
 	</div>
 	<?php
 	echo '<div id="toggle-serverinfo" class="toggled" style="margin-top: 12px;">';

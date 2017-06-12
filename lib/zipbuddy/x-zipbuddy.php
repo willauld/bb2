@@ -394,8 +394,8 @@ if ( !class_exists( "pluginbuddy_zipbuddy" ) ) {
 			
 			// Set some additional system excludes here for now - these are all from the site install root
 			$additional_excludes = array( DIRECTORY_SEPARATOR . 'importbuddy' . DIRECTORY_SEPARATOR,
-										  DIRECTORY_SEPARATOR . 'importbuddy.php',
-										  DIRECTORY_SEPARATOR . 'importbuddy.txt',
+										  DIRECTORY_SEPARATOR . 'importbb2.php',
+										  DIRECTORY_SEPARATOR . 'importbb2_log.txt',
 										  DIRECTORY_SEPARATOR . 'wp-content' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'pluginbuddy_backupbuddy.txt'
 										);
 			
@@ -608,7 +608,7 @@ if ( !class_exists( "pluginbuddy_zipbuddy" ) ) {
 				$this->status( 'details',  'Starting highspeed extraction (exec)... This may take a moment...' );
 				
 				$command = 'unzip -qo'; // q = quiet, o = overwrite without prompt.
-				$command .= " '$zip_file' -d '$destination_directory' -x 'importbuddy.php'"; // x excludes importbuddy script to prevent overwriting newer importbuddy on extract step.
+				$command .= " '$zip_file' -d '$destination_directory' -x 'importbb2.php'"; // x excludes importbuddy script to prevent overwriting newer importbuddy on extract step.
 			
 				// Handle windows.
 				if ( stristr( PHP_OS, 'WIN' ) && !stristr( PHP_OS, 'DARWIN' ) ) { // Running Windows. (not darwin)

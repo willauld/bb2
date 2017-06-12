@@ -825,9 +825,10 @@ if ( !class_exists( "pluginbuddy_backupbuddy_admin" ) ) {
 				add_submenu_page( $this->_parent->_var, $this->_parent->_name. ' ' . __('Getting Started', 'it-l10n-backupbuddy'), __('Getting Started', 'it-l10n-backupbuddy'), $role, $this->_parent->_var, array(&$this, 'view_gettingstarted'));
 				
 				add_submenu_page( $this->_parent->_var, $this->_parent->_name. ' ' . __('Backup & Restore', 'it-l10n-backupbuddy'), __('Backup & Restore', 'it-l10n-backupbuddy'), $role, $this->_parent->_var.'-backup', array(&$this, 'view_backup'));
-				add_submenu_page( $this->_parent->_var, $this->_parent->_name. ' ' . __('Malware Scan', 'it-l10n-backupbuddy'), __('Malware Scan', 'it-l10n-backupbuddy'), $role, $this->_parent->_var.'-malware', array(&$this, 'view_malware'));
+				//WGAadd_submenu_page( $this->_parent->_var, $this->_parent->_name. ' ' . __('Malware Scan', 'it-l10n-backupbuddy'), __('Malware Scan', 'it-l10n-backupbuddy'), $role, $this->_parent->_var.'-malware', array(&$this, 'view_malware'));
 				add_submenu_page( $this->_parent->_var, $this->_parent->_name. ' ' . __('Server Info.', 'it-l10n-backupbuddy'), __('Server Info.', 'it-l10n-backupbuddy'), $role, $this->_parent->_var.'-tools', array(&$this, 'view_tools'));
 				add_submenu_page( $this->_parent->_var, $this->_parent->_name. ' ' . __('Scheduling', 'it-l10n-backupbuddy'),__('Scheduling', 'it-l10n-backupbuddy'), $role, $this->_parent->_var.'-scheduling', array(&$this, 'view_scheduling'));
+                /*WGA
 				if ( function_exists( 'is_network_admin' ) && is_network_admin() ) {
 					add_submenu_page( $this->_parent->_var, $this->_parent->_name. ' ' . __('Multisite Import (BETA)', 'it-l10n-backupbuddy'), __('Multisite Import (BETA)', 'it-l10n-backupbuddy'), $role, $this->_parent->_var . '-msimport', array(&$this, 'view_multisiteimport'));
 				}
@@ -837,6 +838,7 @@ if ( !class_exists( "pluginbuddy_backupbuddy_admin" ) ) {
 					add_action( 'admin_print_scripts-' . $hook, array( &$this, 'repairbuddy_scripts' ) );
 					add_action( 'admin_print_styles-' . $hook, array( &$this, 'repairbuddy_styles' ) );
 				//}
+				*/
 				add_submenu_page( $this->_parent->_var, $this->_parent->_name. ' ' . __('Settings', 'it-l10n-backupbuddy'), __('Settings', 'it-l10n-backupbuddy'), $role, $this->_parent->_var.'-settings', array(&$this, 'view_settings'));
 			}
 		}

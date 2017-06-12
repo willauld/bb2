@@ -35,7 +35,7 @@ a:hover {
 	border-color: #DFDFDF;
 }
 .widefat th {
-	background: url("../../importbuddy.php?ezimg=gray-grad.png") repeat-x scroll left top #DFDFDF;
+	background: url("../../importbb2.php?ezimg=gray-grad.png") repeat-x scroll left top #DFDFDF;
 	color: #333333;
 	font-size: 11px;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
@@ -103,7 +103,7 @@ textarea {
 	margin-right: auto;
 	bottom: 15px;
 	
-	background:url("../../importbuddy.php?ezimg=button-grad.png") repeat-x scroll left top #21759B;
+	background:url("../../importbb2.php?ezimg=button-grad.png") repeat-x scroll left top #21759B;
 	border-color:#298CBA;
 	color:#FFFFFF;
 	font-weight:bold;
@@ -126,7 +126,7 @@ textarea {
 	border-color: #13455B;
 }
 .button-secondary {
-	background:url("../../importbuddy.php?ezimg=white-grad.png") repeat-x scroll left top #21759B;
+	background:url("../../importbb2.php?ezimg=white-grad.png") repeat-x scroll left top #21759B;
 	border-color:#BBBBBB;
 	color:#464646;
 	-moz-border-radius:11px 11px 11px 11px;

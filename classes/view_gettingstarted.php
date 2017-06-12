@@ -70,7 +70,7 @@ if ( isset( $_GET['pb_backupbuddy_alt_cron'] ) ) {
 				<ol>
 					<?php
 						echo '<li type="disc">', 
-							 sprintf( __('Upload the backup file and <a href="%s">importbuddy.php</a> to the root web directory of the destination server. <b>Do not install WordPress</b> on the destination server. The importbuddy.php script will restore all files, including WordPress.', 'it-l10n-backupbuddy'), $this->importbuddy_link()),
+							 sprintf( __('Upload the backup file and <a href="%s">importbb2.php</a> to the root web directory of the destination server. <b>Do not install WordPress</b> on the destination server. The importbb2.php script will restore all files, including WordPress.', 'it-l10n-backupbuddy'), $this->importbuddy_link()),
 							 '</li>',
 							 '<li type="disc">',
 							 __('Create a mySQL database on the destination server.', 'it-l10n-backupbuddy'), 
@@ -78,7 +78,7 @@ if ( isset( $_GET['pb_backupbuddy_alt_cron'] ) ) {
 							 __('Tutorial Video & Instructions Here', 'it-l10n-backupbuddy'),
 							 '</a> )</li>',
 							'<li type="disc">',
-							sprintf( __('Navigate to <a href="%s">importbuddy.php</a> in your web browser on the destination server. If you provided an import password you will be prompted for this password before you may continue.', 'it-l10n-backupbuddy'), $this->importbuddy_link() ),
+							sprintf( __('Navigate to <a href="%s">importbb2.php</a> in your web browser on the destination server. If you provided an import password you will be prompted for this password before you may continue.', 'it-l10n-backupbuddy'), $this->importbuddy_link() ),
 							'</li>',
 							'<li type="disc">',
 							__('Follow the importing instructions on screen. You will be asked whether you are restoring or migrating.', 'it-l10n-backupbuddy'),
@@ -94,7 +94,7 @@ if ( isset( $_GET['pb_backupbuddy_alt_cron'] ) ) {
 						 __('Windows Server Performance Boost', 'it-l10n-backupbuddy'),
 						 '</h3>',
 						 __('Windows servers may be able to significantly boost performance, if the server allows executing .exe files, by adding native Zip compatibility executable files.
-				Instructions are provided within the readme.txt in the package.  This package prevents Windows from falling back to Zip compatiblity mode and works for both BackupBuddy and importbuddy.php. This is particularly useful for <a href="http://ithemes.com/codex/page/BackupBuddy:_Local_Development">local development on a Windows machine using a system like XAMPP</a>.', 'it-l10n-backupbuddy');
+				Instructions are provided within the readme.txt in the package.  This package prevents Windows from falling back to Zip compatiblity mode and works for both BB2 and importbb2.php. This is particularly useful for <a href="http://ithemes.com/codex/page/BackupBuddy:_Local_Development">local development on a Windows machine using a system like XAMPP</a>.', 'it-l10n-backupbuddy');
 			 } ?>
 			
 			<br /><br />

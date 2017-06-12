@@ -15,7 +15,7 @@ if ( true === $result ) {
 	if ( true === $api->migrate_wp_config() ) {
 		$this->status( 'message', 'Import complete!' );
 		echo '<br><br><b>Import complete for the site: </b><a href="' . $this->_options['siteurl'] . '" target="_new">' . $this->_options['siteurl'] . '</a><br><br>';
-		echo '<img src="?ezimg=bullet_error.png" style="float: left;"><div style="margin-left: 20px;">Verify site functionality then delete the backup ZIP file and importbuddy.php from your site root (the next step will attempt to do this for you). Leaving these files is a security risk. Leaving the zip file and then subsequently running a BackupBuddy backup will result in excessively large backups as this zip file will be included.</div>';
+		echo '<img src="?ezimg=bullet_error.png" style="float: left;"><div style="margin-left: 20px;">Verify site functionality then delete the backup ZIP file and importbb2.php from your site root (the next step will attempt to do this for you). Leaving these files is a security risk. Leaving the zip file and then subsequently running a BackupBuddy backup will result in excessively large backups as this zip file will be included.</div>';
 		
 		echo '<form action="?step=6" method=post>';
 		echo '<input type="hidden" name="options" value="' . htmlspecialchars( serialize( $this->_options ) ) . '" />';
@@ -28,7 +28,7 @@ if ( true === $result ) {
 			<br>		
 			<label for="delete_temp" style="width: auto; font-size: 12px;"><input type="checkbox" name="delete_temp" id="delete_temp" value="1" checked> Delete temporary import files</label>
 		</td><td>
-			<label for="delete_importbuddy" style="width: auto; font-size: 12px;"><input type="checkbox" name="delete_importbuddy" id="delete_importbuddy" value="1" checked> Delete importbuddy.php script</label>
+			<label for="delete_importbuddy" style="width: auto; font-size: 12px;"><input type="checkbox" name="delete_importbuddy" id="delete_importbuddy" value="1" checked> Delete importbb2.php script</label>
 			<br>
 			<label for="delete_importbuddylog" style="width: auto; font-size: 12px;"><input type="checkbox" name="delete_importbuddylog" id="delete_importbuddylog" value="1" checked> Delete importbuddy.txt log file</label>
 		</td></tr></table>

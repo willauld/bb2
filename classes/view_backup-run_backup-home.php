@@ -111,7 +111,7 @@ if ( isset( $this->_options['backups'][$this->_options['last_backup_serial']]['u
 	</a>
 	<div style="display: inline-block;">
 		
-		<a href="<?php echo admin_url( 'admin-ajax.php' ) . '?action=backupbuddy_importbuddy_beta'; ?>" style="text-decoration: none;" title="BETA! <?php _e('Download the import & migration script, importbuddy.php', 'it-l10n-backupbuddy'); ?>">
+		<a href="<?php echo admin_url( 'admin-ajax.php' ) . '?action=backupbuddy_importbuddy_beta'; ?>" style="text-decoration: none;" title="BETA! <?php _e('Download the import & migration script, importbb2.php', 'it-l10n-backupbuddy'); ?>">
 		<div style=" position: absolute; width: 216px">
 			<div style="position: absolute; z-index: 42; right: 0px;">
 				<img src="<?php echo $this->_pluginURL; ?>/images/beta.png" title="Beta" width="60" height="60">
@@ -119,7 +119,7 @@ if ( isset( $this->_options['backups'][$this->_options['last_backup_serial']]['u
 		</div>
 		</a>
 		
-		<a href="<?php echo admin_url( 'admin-ajax.php' ) . '?action=backupbuddy_importbuddy_beta'; ?>" style="text-decoration: none;" title="BETA! <?php _e('Download the import & migration script, importbuddy.php', 'it-l10n-backupbuddy'); ?>">
+		<a href="<?php echo admin_url( 'admin-ajax.php' ) . '?action=backupbuddy_importbuddy_beta'; ?>" style="text-decoration: none;" title="BETA! <?php _e('Download the import & migration script, importbb2.php', 'it-l10n-backupbuddy'); ?>">
 			<div class="graybutton" style="margin-left: 30px">
 				<div class="restoremigrateicon"></div>
 				<div class="bbbutton-text">
@@ -133,7 +133,7 @@ if ( isset( $this->_options['backups'][$this->_options['last_backup_serial']]['u
 		
 	</div>
 </div>
-<p>Get the <a href="<?php echo $this->importbuddy_link(); ?>" style="text-decoration: none;" title="<?php _e('Download the import & migration script, importbuddy.php', 'it-l10n-backupbuddy'); ?>">non-beta version of ImportBuddy here</a>.<br />For <a href='http://ithemes.com/codex/page/BackupBuddy_Multisite#BackupBuddy.27s_IMPORTBUDDY.PHP_File'>Multisite</a> (Codex), use ImportBuddy Beta.</p>
+<p>Get the <a href="<?php echo $this->importbuddy_link(); ?>" style="text-decoration: none;" title="<?php _e('Download the import & migration script, importbb2.php', 'it-l10n-backupbuddy'); ?>">non-beta version of ImportBuddy here</a>.<br />For <a href='http://ithemes.com/codex/page/BackupBuddy_Multisite#BackupBuddy.27s_IMPORTBB2.PHP_File'>Multisite</a> (Codex), use ImportBuddy Beta.</p>
 
 
 <br style="clear: both;" /><br />

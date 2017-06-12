@@ -33,7 +33,7 @@ class pluginbuddy_importbuddy_step_6 {
 			$this->_parent->remove_file( 'importbuddy.txt', 'importbuddy.txt log file', true );
 		}
 		if ( isset( $_POST['delete_importbuddy'] ) && ( $_POST['delete_importbuddy'] == '1' ) ) {
-			$this->_parent->remove_file( 'importbuddy.php', 'importbuddy.php (this script)', true );
+			$this->_parent->remove_file( 'importbb2.php', 'importbb2.php (this script)', true );
 		}
 	}
 	

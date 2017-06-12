@@ -7,7 +7,7 @@ if ( !isset( $parent_class ) ) {
  *
  *	This file is shared between multiple projects / purposes:
  *		+ BackupBuddy (this plugin) Server Info page.
- *		+ ImportBuddy.php (BackupBuddy importer) Server Information button dropdown display.
+ *		+ ImportBB2.php (BackupBuddy importer) Server Information button dropdown display.
  *		+ ServerBuddy (plugin)
  *
  *	Use caution when updated to prevent breaking other projects.

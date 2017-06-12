@@ -1083,15 +1083,15 @@ if (!class_exists("pluginbuddy_backupbuddy")) {
 				die( 'Access denied in demo mode.' );
 			}
 			
-			$output = file_get_contents( dirname( __FILE__ ) . '/importbuddy.php' );
+			$output = file_get_contents( dirname( __FILE__ ) . '/importbb2.php' );
 			if ( isset( $_GET['pass'] ) && !empty( $_GET['pass'] ) ) {
 				$output = preg_replace('/#PASSWORD#/', $_GET['pass'], $output, 1 ); // Only replaces first instance.
 			}
 			$output = preg_replace('/#VERSION#/', $this->_version, $output, 1 ); // Only replaces first instance.
 			
 			header( 'Content-Description: File Transfer' );
-			header( 'Content-Type: text/plain; name=importbuddy.php' );
-			header( 'Content-Disposition: attachment; filename=importbuddy.php' );
+			header( 'Content-Type: text/plain; name=importbb2.php' );
+			header( 'Content-Disposition: attachment; filename=importbb2.php' );
 			header( 'Expires: 0' );
 			header( 'Content-Length: ' . strlen( $output ) );
 			
@@ -1145,8 +1145,8 @@ if (!class_exists("pluginbuddy_backupbuddy")) {
 			$output .= "###PACKDATA,END\n*/";
 			
 			header( 'Content-Description: File Transfer' );
-			header( 'Content-Type: text/plain; name=importbuddy.php' );
-			header( 'Content-Disposition: attachment; filename=importbuddy.php' );
+			header( 'Content-Type: text/plain; name=importbb2.php' );
+			header( 'Content-Disposition: attachment; filename=importbb2.php' );
 			header( 'Expires: 0' );
 			header( 'Content-Length: ' . strlen( $output ) );
 			
@@ -1976,10 +1976,10 @@ if (!class_exists("pluginbuddy_backupbuddy")) {
 			$pluginbuddy_backupbuddy_backup = new pluginbuddy_backupbuddy_backup( $this );
 			$pluginbuddy_backupbuddy_backup->anti_directory_browsing( $this->_options['backup_directory'] );
 			
-			// Remove any copy of importbuddy.php in root.
-			if ( file_exists( ABSPATH . 'importbuddy.php' ) ) {
-				$this->log( 'Unlinked importbuddy.php in root of site.' );
-				unlink( ABSPATH . 'importbuddy.php' );
+			// Remove any copy of importbb2.php in root.
+			if ( file_exists( ABSPATH . 'importbb2.php' ) ) {
+				$this->log( 'Unlinked importbb2.php in root of site.' );
+				unlink( ABSPATH . 'importbb2.php' );
 			}
 		}
 		

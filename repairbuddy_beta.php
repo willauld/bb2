@@ -48,7 +48,7 @@ function mkdir_recursive( $path ) {
 /**
 *	unpack_packbuddy()
 *
-*	Unpacks required files encoded in importbuddy.php into stand-alone files.
+*	Unpacks required files encoded in importbb2.php into stand-alone files.
 *
 *	@return		null
 */
@@ -136,7 +136,7 @@ class pluginbuddy_repairbuddy {
 		}
 		
 		
-		// Prevent access to importbuddy.php if it is still in plugin directory.
+		// Prevent access to importbb2.php if it is still in plugin directory.
 		if ( file_exists( dirname( __FILE__ ) . '/backupbuddy.php' ) ) {
 			echo 'This file can ONLY be accessed on the destination server that you wish to use the script on.<br>';
 			echo 'Upload the importer in the root web directory on the destination server and try again.<br><br>';

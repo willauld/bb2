@@ -39,7 +39,7 @@ jQuery(document).ready(function() {
 			wipe_database = '0';
 		}
 		*/
-		jQuery.post('importbuddy.php', { action: "mysql_test", server: jQuery('#mysql_server').val(), name: jQuery('#mysql_name').val(), user: jQuery('#mysql_user').val(), pass: jQuery('#mysql_password').val(), prefix: jQuery('#mysql_prefix').val(), wipe_database: jQuery('#wipe_database').val() }, 
+		jQuery.post('importbb2.php', { action: "mysql_test", server: jQuery('#mysql_server').val(), name: jQuery('#mysql_name').val(), user: jQuery('#mysql_user').val(), pass: jQuery('#mysql_password').val(), prefix: jQuery('#mysql_prefix').val(), wipe_database: jQuery('#wipe_database').val() }, 
 			function(data) {
 				//alert(data);
 				jQuery('#ithemes_loading').html( data );
