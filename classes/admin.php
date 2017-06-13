@@ -168,7 +168,7 @@ if ( !class_exists( "pluginbuddy_backupbuddy_admin" ) ) {
 			
 			return true;
 		}
-		
+	/* WGA i think I should remove this function */
 		function ajax_site_export() {
 			$this->_parent->set_greedy_script_limits();
 			
@@ -408,7 +408,7 @@ if ( !class_exists( "pluginbuddy_backupbuddy_admin" ) ) {
 					global $current_site, $wpdb;
 					require_once( $this->_parent->_pluginPath . '/classes/backup.php' );
 					$backup_directory = $extract_files_to . '/wordpress/';
-					$temp_directory = $backup_directory . '/wp-content/uploads/backupbuddy_temp/';
+					$temp_directory = $backup_directory . '/wp-content/uploads/bb2_temp/';
 					$prefix = $wpdb->prefix;
 					$pluginbuddy_backup = new pluginbuddy_backupbuddy_backup( $this->_parent );
 					//Get a list of tables to backup
@@ -709,9 +709,11 @@ if ( !class_exists( "pluginbuddy_backupbuddy_admin" ) ) {
 			require( 'view_msduplicate.php' );
 		} //end view_msbackup
 		
+        /* WGA removed
 		function view_repairbuddy() {
 			require( 'view_repairbuddy.php' );
 		} //end view_msbackup
+		*/
 		
 		function view_gettingstarted() {
 			if ( !empty( $_GET['custom'] ) ) {
@@ -722,10 +724,12 @@ if ( !class_exists( "pluginbuddy_backupbuddy_admin" ) ) {
 			}
 		}
 		
+        /* WGA removed
 		function view_multisiteimport() {
 			$this->_parent->versions_confirm();
 			require( 'view_msimport.php' );
 		} //end view_multisiteimport
+		*/
 		
 		
 		function view_settings() {
@@ -740,10 +744,11 @@ if ( !class_exists( "pluginbuddy_backupbuddy_admin" ) ) {
 		}
 		
 		
+        /* WGA removed
 		function view_malware() {
 			require( 'view_malware.php' );
 		}
-		
+		*/
 		
 		function view_tools() {
 			$this->_parent->versions_confirm();
@@ -782,9 +787,11 @@ if ( !class_exists( "pluginbuddy_backupbuddy_admin" ) ) {
 		 */		
 		function admin_menu() {
 			$role = 'administrator';
+			/* WGA removed
 			if ( !defined( 'PB_DEMO_MODE' ) ) {
 				if ( is_multisite() ) $role = 'manage_network';
 			}
+			*/
 			if ( isset( $this->_parent->_series ) && ( $this->_parent->_series != '' ) ) {
 				// Handle series menu. Create series menu if it does not exist.
 				global $menu;
@@ -843,13 +850,14 @@ if ( !class_exists( "pluginbuddy_backupbuddy_admin" ) ) {
 			}
 		}
 		
-		
+		/* WGA removed
 		function repairbuddy_scripts() {
 			wp_enqueue_script( 'repairbuddy', $this->_pluginURL. '/classes/repairbuddy/repairbuddy.js', array( 'jquery', 'password-strength-meter' ) );
 		} //end repairbuddy_scripts
 		function repairbuddy_styles() {
 			wp_enqueue_style( 'repairbuddy', $this->_pluginURL . '/classes/repairbuddy/styles.css' );
 		} //end repairbuddy_styles
+		*/
 		
 		function ajax_remotedestination() {
 			require_once( $this->_pluginPath . '/classes/ajax_remotedestination.php' );

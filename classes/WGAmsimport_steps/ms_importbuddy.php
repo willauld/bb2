@@ -349,7 +349,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 				$failed = !$this->extract_files();
 				
 				$this->_backupdata_file = $this->_options[ 'extract_to' ] . '/wp-content/uploads/temp_' . $this->_options['zip_id'] . '/backupbuddy_dat.php'; // Full backup dat file location
-				$this->_backupdata_file_new = $this->_options[ 'extract_to' ] . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php'; // Full backup dat file location
+				$this->_backupdata_file_new = $this->_options[ 'extract_to' ] . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php'; // Full backup dat file location
 				if ( !file_exists( $this->_backupdata_file ) && !file_exists( $this->_backupdata_file_new ) && ( !file_exists( $this->_options[ 'extract_to' ] . '/backupbuddy_dat.php' ) ) ) {
 					$failed = true;
 					$this->log( 'MISSING dat file extracting Zip File "' . $this->_options[ 'extract_to' ] . '/' . $this->_options['file'] . '" into "' . $this->_options[ 'extract_to' ] . '".' );
@@ -904,18 +904,18 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			// Full backup .sql file
 			$this->remove_file( $this->_options[ 'extract_to' ] . '/wp-content/uploads/temp_'.$this->_options['zip_id'].'/db.sql', 'db.sql (backup database dump)', false );
 			$this->remove_file( $this->_options[ 'extract_to' ] . '/wp-content/uploads/temp_'.$this->_options['zip_id'].'/db_1.sql', 'db_1.sql (backup database dump)', false );
-			$this->remove_file( $this->_options[ 'extract_to' ] . '/wp-content/uploads/backupbuddy_temp/'.$this->_options['zip_id'].'/db_1.sql', 'db_1.sql (backup database dump)', false );
+			$this->remove_file( $this->_options[ 'extract_to' ] . '/wp-content/uploads/bb2_temp/'.$this->_options['zip_id'].'/db_1.sql', 'db_1.sql (backup database dump)', false );
 			// DB only sql file
 			$this->remove_file( $this->_options[ 'extract_to' ] . '/db.sql', 'db.sql (backup database dump)', false );
 			$this->remove_file( $this->_options[ 'extract_to' ] . '/db_1.sql', 'db_1.sql (backup database dump)', false );
 			
 			// Full backup dat file
 			$this->remove_file( $this->_options[ 'extract_to' ] . '/wp-content/uploads/temp_' . $this->_options['zip_id'] . '/backupbuddy_dat.php', 'backupbuddy_dat.php (backup data file)', false );
-			$this->remove_file( $this->_options[ 'extract_to' ] . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php', 'backupbuddy_dat.php (backup data file)', false );
+			$this->remove_file( $this->_options[ 'extract_to' ] . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php', 'backupbuddy_dat.php (backup data file)', false );
 			// DB only dat file
 			$this->remove_file( $this->_options[ 'extract_to' ] . '/backupbuddy_dat.php', 'backupbuddy_dat.php (backup data file)', false );
 			
-			$this->remove_file( $this->_options[ 'extract_to' ] . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/', 'Temporary backup directory.', false );
+			$this->remove_file( $this->_options[ 'extract_to' ] . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/', 'Temporary backup directory.', false );
 			
 			echo '<br ><br>';
 			echo '<div class="alert">Thank you for choosing BackupBuddy!</div>';
@@ -1063,7 +1063,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 		function load_backup_dat() {
 			$this->log( 'STARTING Loading backup dat file....' );
 			$backupdata_file = $this->_options[ 'extract_to' ] . '/wp-content/uploads/temp_'. $this->_options['zip_id'] .'/backupbuddy_dat.php'; // Full backup dat file location
-			$backupdata_file_new = $this->_options[ 'extract_to' ] . '/wp-content/uploads/backupbuddy_temp/'. $this->_options['zip_id'] .'/backupbuddy_dat.php'; // Full backup dat file location
+			$backupdata_file_new = $this->_options[ 'extract_to' ] . '/wp-content/uploads/bb2_temp/'. $this->_options['zip_id'] .'/backupbuddy_dat.php'; // Full backup dat file location
 			
 			if ( file_exists( $backupdata_file ) ) { // Full backup location.
 				$backupdata = file_get_contents( $backupdata_file );
@@ -1256,8 +1256,8 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 				$file_stream = fopen( $this->_options[ 'extract_to' ] . '/wp-content/uploads/temp_'.$this->_options['zip_id'].'/db.sql', 'r' );
 			} elseif ( file_exists ( $this->_options[ 'extract_to' ] . '/db.sql' ) ) { // DB-only backup found.
 				$file_stream = fopen( $this->_options[ 'extract_to' ] . '/db.sql', 'r' );
-			} elseif ( file_exists ( $this->_options[ 'extract_to' ] . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/db_1.sql' ) ) { // Full backup found. 2.0 method.
-				$file_stream = fopen( $this->_options[ 'extract_to' ] . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/db_1.sql', 'r' );
+			} elseif ( file_exists ( $this->_options[ 'extract_to' ] . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/db_1.sql' ) ) { // Full backup found. 2.0 method.
+				$file_stream = fopen( $this->_options[ 'extract_to' ] . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/db_1.sql', 'r' );
 			} elseif ( file_exists ( $this->_options[ 'extract_to' ] . '/db_1.sql' ) ) { // DB-only backup found. 2.0 method.
 				$file_stream = fopen( $this->_options[ 'extract_to' ] . '/db_1.sql', 'r' );
 			}
@@ -1958,7 +1958,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			if ( 
 			  ( !file_exists ( $this->_options[ 'extract_to' ] . '/wp-content/uploads/temp_'.$this->_options['zip_id'].'/backupbuddy_dat.php' ) ) &&
 			  ( !file_exists ( $this->_options[ 'extract_to' ] . '/backupbuddy_dat.php' ) ) &&
-			  ( !file_exists ( $this->_options[ 'extract_to' ] . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php' ) )
+			  ( !file_exists ( $this->_options[ 'extract_to' ] . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php' ) )
 			  ) {
 				$this->alert( 'Highspeed extraction reported success; HOWEVER, key files are missing. Falling back to slower mode to try again.', true );
 				return false;
@@ -2006,7 +2006,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			if ( 
 			  ( !file_exists ( $this->_options[ 'extract_to' ] . '/wp-content/uploads/temp_'.$this->_options['zip_id'].'/backupbuddy_dat.php' ) ) &&
 			  ( !file_exists ( $this->_options[ 'extract_to' ] . '/backupbuddy_dat.php' ) ) &&
-			  ( !file_exists ( $this->_options[ 'extract_to' ] . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php' ) )
+			  ( !file_exists ( $this->_options[ 'extract_to' ] . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php' ) )
 			  ) {
 				$this->alert( 'Highspeed extraction reported success; HOWEVER, key files are missing. Falling back to slower mode to try again.', true );
 				return false;
@@ -2039,7 +2039,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			if ( 
 			  ( !file_exists ( $this->_options[ 'extract_to' ] . '/wp-content/uploads/temp_'.$this->_options['zip_id'].'/backupbuddy_dat.php' ) ) &&
 			  ( !file_exists ( $this->_options[ 'extract_to' ] . '/backupbuddy_dat.php' ) ) &&
-			  ( !file_exists ( $this->_options[ 'extract_to' ] . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php' ) )
+			  ( !file_exists ( $this->_options[ 'extract_to' ] . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php' ) )
 			  ) {
 				$this->alert( 'Highspeed extraction reported success; HOWEVER, key files are missing. Falling back to slower mode to try again.', true );
 				return false;

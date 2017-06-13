@@ -14,18 +14,18 @@ class pluginbuddy_importbuddy_step_6 {
 			// Full backup .sql file
 			$this->_parent->remove_file( ABSPATH . 'wp-content/uploads/temp_'.$this->_parent->_options['zip_id'].'/db.sql', 'db.sql (backup database dump)', false );
 			$this->_parent->remove_file( ABSPATH . 'wp-content/uploads/temp_'.$this->_parent->_options['zip_id'].'/db_1.sql', 'db_1.sql (backup database dump)', false );
-			$this->_parent->remove_file( ABSPATH . 'wp-content/uploads/backupbuddy_temp/'.$this->_parent->_options['zip_id'].'/db_1.sql', 'db_1.sql (backup database dump)', false );
+			$this->_parent->remove_file( ABSPATH . 'wp-content/uploads/bb2_temp/'.$this->_parent->_options['zip_id'].'/db_1.sql', 'db_1.sql (backup database dump)', false );
 			// DB only sql file
 			$this->_parent->remove_file( ABSPATH . 'db.sql', 'db.sql (backup database dump)', false );
 			$this->_parent->remove_file( ABSPATH . 'db_1.sql', 'db_1.sql (backup database dump)', false );
 			
 			// Full backup dat file
 			$this->_parent->remove_file( ABSPATH . 'wp-content/uploads/temp_' . $this->_parent->_options['zip_id'] . '/backupbuddy_dat.php', 'backupbuddy_dat.php (backup data file)', false );
-			$this->_parent->remove_file( ABSPATH . 'wp-content/uploads/backupbuddy_temp/' . $this->_parent->_options['zip_id'] . '/backupbuddy_dat.php', 'backupbuddy_dat.php (backup data file)', false );
+			$this->_parent->remove_file( ABSPATH . 'wp-content/uploads/bb2_temp/' . $this->_parent->_options['zip_id'] . '/backupbuddy_dat.php', 'backupbuddy_dat.php (backup data file)', false );
 			// DB only dat file
 			$this->_parent->remove_file( ABSPATH . 'backupbuddy_dat.php', 'backupbuddy_dat.php (backup data file)', false );
 			
-			$this->_parent->remove_file( ABSPATH . 'wp-content/uploads/backupbuddy_temp/' . $this->_parent->_options['zip_id'] . '/', 'Temporary backup directory.', false );
+			$this->_parent->remove_file( ABSPATH . 'wp-content/uploads/bb2_temp/' . $this->_parent->_options['zip_id'] . '/', 'Temporary backup directory.', false );
 			
 			$this->_parent->remove_file( ABSPATH . 'importbuddy/', 'ImportBuddy Directory', true );
 		}

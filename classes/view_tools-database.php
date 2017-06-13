@@ -37,6 +37,15 @@ if ( defined( 'pluginbuddy_importbuddy' ) ) {
 		$total_size = 0;
 		$total_rows = 0;
 		$result = mysql_query("SHOW TABLE STATUS");
+		if (!$result) {
+			global $wpdb;
+			mysql_connect( DB_HOST, DB_USER, DB_PASSWORD );
+			mysql_select_db( DB_NAME );
+			$result = mysql_query("SHOW TABLE STATUS");
+			if (!$result) {
+				die('Invalid query: ' . mysql_error());
+			}
+		}
 		while( $rs = mysql_fetch_array( $result ) ) {
 			echo '<tr class="entry-row alternate">';
 			echo '	<td>' . $rs['Name'] . '</td>';

@@ -38,8 +38,8 @@ if ( !empty( $_POST['save'] ) ) {
 			jQuery('#exlude_dirs').fileTree({ root: '/', multiFolder: false, script: '<?php echo admin_url('admin-ajax.php').'?action=pb_backupbuddy_filetree'; ?>' }, function(file) {
 				//alert('file:'+file);
 			}, function(directory) {
-				if ( ( directory == '/wp-content/' ) || ( directory == '/wp-content/uploads/' ) || ( directory == '/wp-content/uploads/bb2_backups/' ) || ( directory == '/wp-content/uploads/backupbuddy_temp/' ) ) {
-					alert( '<?php _e('You cannot exclude /wp-content/ or /wp-content/uploads/.  However, you may exclude subdirectories within these. The bb2_backups & backupbuddy_temp directories are automatically excluded and cannot be added to exclusion list.', 'it-l10n-backupbuddy');?>' );
+				if ( ( directory == '/wp-content/' ) || ( directory == '/wp-content/uploads/' ) || ( directory == '/wp-content/uploads/bb2_backups/' ) || ( directory == '/wp-content/uploads/bb2_temp/' ) ) {
+					alert( '<?php _e('You cannot exclude /wp-content/ or /wp-content/uploads/.  However, you may exclude subdirectories within these. The bb2_backups & bb2_temp directories are automatically excluded and cannot be added to exclusion list.', 'it-l10n-backupbuddy');?>' );
 				} else {
 					jQuery('#exclude_dirs').val( directory + "\n" + jQuery('#exclude_dirs').val() );
 				}

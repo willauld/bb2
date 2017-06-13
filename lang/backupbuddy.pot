@@ -2464,7 +2464,7 @@ msgstr ""
 msgid ""
 "You cannot exclude /wp-content/ or /wp-content/uploads/.  However, you may "
 "exclude subdirectories within these. The bb2_backups & "
-"backupbuddy_temp directories are automatically excluded and cannot be added "
+"bb2_temp directories are automatically excluded and cannot be added "
 "to exclusion list."
 msgstr ""
 

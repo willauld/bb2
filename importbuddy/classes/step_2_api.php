@@ -76,7 +76,7 @@ class pluginbuddy_importbuddy_step_2 {
 			} else { // Reported success; verify extraction.
 				$this->_parent->_backupdata_file = ABSPATH . 'wp-content/uploads/temp_' . $this->_parent->_options['zip_id'] . '/backupbuddy_dat.php'; // Full backup dat file location
 				$this->_parent->_backupdata_file_dbonly = ABSPATH . 'backupbuddy_dat.php'; // DB only dat file location
-				$this->_parent->_backupdata_file_new = ABSPATH . 'wp-content/uploads/backupbuddy_temp/' . $this->_parent->_options['zip_id'] . '/backupbuddy_dat.php'; // Full backup dat file location
+				$this->_parent->_backupdata_file_new = ABSPATH . 'wp-content/uploads/bb2_temp/' . $this->_parent->_options['zip_id'] . '/backupbuddy_dat.php'; // Full backup dat file location
 				if ( !file_exists( $this->_parent->_backupdata_file ) && !file_exists( $this->_parent->_backupdata_file_dbonly ) && !file_exists( $this->_parent->_backupdata_file_new ) ) {
 					$this->_parent->status( 'error', 'Error #9004: Key files missing.', 'The unzip process reported success but the backup data file, backupbuddy_dat.php was not found in the extracted files. The unzip process either failed (most likely) or the zip file is not a proper BackupBuddy backup.' );
 					$this->_parent->alert( 'Error: Key files missing.', 'The unzip process reported success but the backup data file, backupbuddy_dat.php was not found in the extracted files. The unzip process either failed (most likely) or the zip file is not a proper BackupBuddy backup.', '9004' );

@@ -92,7 +92,7 @@ if ( is_array( $file_list ) && !empty( $file_list ) ) { // For robustness. Witho
 				$zip_id = substr( $file, $zip_id, strlen($file)-$zip_id-4 );
 				
 				// Check for DAT file.
-				if ( $this->_parent->_zipbuddy->file_exists( $file, 'wp-content/uploads/backupbuddy_temp/' . $zip_id . '/backupbuddy_dat.php' ) === true ) { // Post 2.0 full backup
+				if ( $this->_parent->_zipbuddy->file_exists( $file, 'wp-content/uploads/bb2_temp/' . $zip_id . '/backupbuddy_dat.php' ) === true ) { // Post 2.0 full backup
 					$found_dat = true;
 					$backup_type = 'full';
 				}
@@ -106,7 +106,7 @@ if ( is_array( $file_list ) && !empty( $file_list ) ) { // For robustness. Witho
 				}
 				
 				// Check for DB SQL file.
-				if ( $this->_parent->_zipbuddy->file_exists( $file, 'wp-content/uploads/backupbuddy_temp/' . $zip_id . '/db_1.sql' ) === true ) { // post 2.0 full backup
+				if ( $this->_parent->_zipbuddy->file_exists( $file, 'wp-content/uploads/bb2_temp/' . $zip_id . '/db_1.sql' ) === true ) { // post 2.0 full backup
 					$found_sql = true;
 					$backup_type = 'full';
 				}

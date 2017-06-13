@@ -197,7 +197,7 @@ if ( !class_exists( "pluginbuddy_backupbuddy_backup" ) ) {
 			$this->anti_directory_browsing( $this->_backup['backup_directory'] );
 			
 			// Prepare temporary directory for holding SQL and data file.
-			$this->_backup['temp_directory'] = ABSPATH . 'wp-content/uploads/backupbuddy_temp/' . $this->_backup['serial'] . '/';
+			$this->_backup['temp_directory'] = ABSPATH . 'wp-content/uploads/bb2_temp/' . $this->_backup['serial'] . '/';
 			if ( !file_exists( $this->_backup['temp_directory'] ) ) {
 				if ( $this->_parent->mkdir_recursive( $this->_backup['temp_directory'] ) === false ) {
 					$this->status( 'details', sprintf(__('Error #9002: Unable to create temporary storage directory (%s).', 'it-l10n-backupbuddy'), $this->_backup['temp_directory']) );
@@ -210,7 +210,7 @@ if ( !class_exists( "pluginbuddy_backupbuddy_backup" ) ) {
 				$this->error( 'Temp data directory is not writable. Check your permissions. (' . $this->_backup['temp_directory'] . ')', '9015' );
 				return false;
 			}
-			$this->anti_directory_browsing( ABSPATH . 'wp-content/uploads/backupbuddy_temp/' );
+			$this->anti_directory_browsing( ABSPATH . 'wp-content/uploads/bb2_temp/' );
 			
 			// Prepare temporary directory for holding ZIP file while it is being generated.
 			$this->_backup['temporary_zip_directory'] = $this->_options['backup_directory'] . 'temp_zip_' . $this->_backup['serial'] . '/';
