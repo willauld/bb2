@@ -180,8 +180,8 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			header( 'Connection: keep-alive' );
 			ini_set( 'default_socket_timeout', '3600' );
 			set_time_limit( '3600' );
-			ini_set( 'default_socket_timeout', '0' ); //WGA
-			set_time_limit( '0' ); //WGA
+			//ini_set( 'default_socket_timeout', '0' ); //WGA
+			//set_time_limit( '0' ); //WGA
       //ini_set('display_errors','Off');//WGA added 
 			
 			// Determine the current step.
@@ -428,7 +428,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 				$failed = !$this->extract_files();
 				
 				$this->_backupdata_file = ABSPATH . '/wp-content/uploads/temp_' . $this->_options['zip_id'] . '/backupbuddy_dat.php'; // Full backup dat file location
-				$this->_backupdata_file_new = ABSPATH . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php'; // Full backup dat file location
+				$this->_backupdata_file_new = ABSPATH . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php'; // Full backup dat file location
 				if ( !file_exists( $this->_backupdata_file ) && !file_exists( $this->_backupdata_file_new ) && ( !file_exists( ABSPATH . '/backupbuddy_dat.php' ) ) ) {
 					$failed = true;
 					$this->log( 'MISSING dat file extracting Zip File "' . ABSPATH . '/' . $this->_options['file'] . '" into "' . ABSPATH . '".' );
@@ -545,6 +545,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			if ( false === $this->_options['skip_database_import'] ) {
 				// Wipe database if option was selected.
 				if ( $this->_options['wipe_database'] == true ) {
+          //WGA should rewrite this to a strait if statement rather than if else statement
 					if ( isset( $_GET['db_continue'] ) && ( is_numeric( $_GET['db_continue'] ) ) ) {
 						// do nothing
 					} else { // dont wipe on substeps of db import.
@@ -559,6 +560,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 				}
 				
 				// Sanitize db continuation value if needed.
+        // WGA as above rewrite from if else to strait if statment
 				if ( isset( $_GET['db_continue'] ) && ( is_numeric( $_GET['db_continue'] ) ) ) {
 					// do nothing
 				} else {
@@ -617,13 +619,39 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			
 			// Migrate DATABASE if not disabled.
 			if ( false === $this->_options['skip_database_migration'] ) {
-				$failed = !$this->migrate_database(); //WGA need to allow for continue
+				if (!( isset( $_GET['migrate_continue'] ) && ( is_numeric( $_GET['migrate_continue'] ) ) )) {
+					$_GET['migrate_continue'] = 0;
+				}
+				$migrate_result = $this->migrate_database( $_GET['migrate_continue']); //WGA need to allow for continue 
+				if ( true === $migrate_result ) {
+          $failed = false;
+        }
+        elseif (false === $migrate_result ) {
+          $failed = true;
+				} else { // WGA Need to chunk up DB migration and continue...
+					$failed = false;
+					$migration_continue = true;
+					// Continue on table $migrate_result...
+					echo 'Next step will begin import on query ' . $migrate_result . '.<br>';
+        }
 			} else {
 				$failed = false;
 				echo 'Skipping database migration based on settings.<br>';
 			}
 			
 			if ( false === $failed ) {
+        if ( $migration_continue === true )  {
+         //WGA added to continue migration piece here
+					echo '<div class="alert">';
+					echo 'Migration timed out.</div><br><br>';
+					echo 'Please continue to see if it will complete. This may take a few steps.';
+					echo '<form action="?step=6&db_continue=' . $migrate_result . '" method=post>';
+					echo '<input type="hidden" name="options" value="' . htmlspecialchars( serialize( $this->_options ) ) . '" />';
+					echo '<br><br><input type="submit" name="submit" class="button-secondary" value="Continue Migration &raquo" />';
+					echo '</form>';
+
+        } else {
+
 				echo '<br><br>';
 				
 				echo '<div class="alert">';
@@ -639,18 +667,10 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 				echo '<input type="hidden" name="options" value="' . htmlspecialchars( serialize( $this->_options ) ) . '" />';
 				echo '<br><br><input type="submit" name="submit" class="button-secondary" value="Delete import & migration files &raquo" />';
 				echo '</form>';
-      }else if (true === $failed ){
+        }
+      } else { // WGA if (true === $failed ){
 				echo '<b>Restore failed. Please use your back button to correct any errors.</b>';
-			} else {
-         //WGA added to continue migration piece here
-					echo '<div class="alert">';
-					echo 'Migration timed out.</div><br><br>';
-					echo 'Please keep continuing to see if it will complete. This may take a few steps.';
-					echo '<form action="?step=5&db_continue=' . $import_result . '" method=post>';
-					echo '<input type="hidden" name="options" value="' . htmlspecialchars( serialize( $this->_options ) ) . '" />';
-					echo '<br><br><input type="submit" name="submit" class="button-secondary" value="Continue Migration &raquo" />';
-					echo '</form>';
-			}
+			} 
 		}
 
 		
@@ -668,18 +688,18 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			// Full backup .sql file
 			$this->remove_file( ABSPATH . '/wp-content/uploads/temp_'.$this->_options['zip_id'].'/db.sql', 'db.sql (backup database dump)', false );
 			$this->remove_file( ABSPATH . '/wp-content/uploads/temp_'.$this->_options['zip_id'].'/db_1.sql', 'db_1.sql (backup database dump)', false );
-			$this->remove_file( ABSPATH . '/wp-content/uploads/backupbuddy_temp/'.$this->_options['zip_id'].'/db_1.sql', 'db_1.sql (backup database dump)', false );
+			$this->remove_file( ABSPATH . '/wp-content/uploads/bb2_temp/'.$this->_options['zip_id'].'/db_1.sql', 'db_1.sql (backup database dump)', false );
 			// DB only sql file
 			$this->remove_file( ABSPATH . '/db.sql', 'db.sql (backup database dump)', false );
 			$this->remove_file( ABSPATH . '/db_1.sql', 'db_1.sql (backup database dump)', false );
 			
 			// Full backup dat file
 			$this->remove_file( ABSPATH . '/wp-content/uploads/temp_' . $this->_options['zip_id'] . '/backupbuddy_dat.php', 'backupbuddy_dat.php (backup data file)', false );
-			$this->remove_file( ABSPATH . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php', 'backupbuddy_dat.php (backup data file)', false );
+			$this->remove_file( ABSPATH . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php', 'backupbuddy_dat.php (backup data file)', false );
 			// DB only dat file
 			$this->remove_file( ABSPATH . '/backupbuddy_dat.php', 'backupbuddy_dat.php (backup data file)', false );
 			
-			$this->remove_file( ABSPATH . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/', 'Temporary backup directory.', false );
+			$this->remove_file( ABSPATH . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/', 'Temporary backup directory.', false );
 			
 			echo '<br ><br>';
 			echo '<div class="alert">Thank you for choosing BackupBuddy!</div>';
@@ -815,7 +835,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 		function load_backup_dat() {
 			$this->log( 'STARTING Loading backup dat file....' );
 			$backupdata_file = ABSPATH . '/wp-content/uploads/temp_'. $this->_options['zip_id'] .'/backupbuddy_dat.php'; // Full backup dat file location
-			$backupdata_file_new = ABSPATH . '/wp-content/uploads/backupbuddy_temp/'. $this->_options['zip_id'] .'/backupbuddy_dat.php'; // Full backup dat file location
+			$backupdata_file_new = ABSPATH . '/wp-content/uploads/bb2_temp/'. $this->_options['zip_id'] .'/backupbuddy_dat.php'; // Full backup dat file location
 			
 			if ( file_exists( $backupdata_file ) ) { // Full backup location.
 				$backupdata = file_get_contents( $backupdata_file );
@@ -1006,7 +1026,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 		 *	Directly inserts the source SQL dump into the new database.
 		 *	Does NOT modify any data or do any migration.
 		 *
-		 *	@return		boolean		True: success, False: failed.
+		 *	@return		boolean		True: success, False: failed.//WGA mixed boolean numeric return
 		 *
 		 */
 		function import_sql_dump( $query_start = 0 ) {
@@ -1020,8 +1040,8 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 				$file_stream = fopen( ABSPATH . '/wp-content/uploads/temp_'.$this->_options['zip_id'].'/db.sql', 'r' );
 			} elseif ( file_exists ( ABSPATH . '/db.sql' ) ) { // DB-only backup found.
 				$file_stream = fopen( ABSPATH . '/db.sql', 'r' );
-			} elseif ( file_exists ( ABSPATH . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/db_1.sql' ) ) { // Full backup found. 2.0 method.
-				$file_stream = fopen( ABSPATH . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/db_1.sql', 'r' );
+			} elseif ( file_exists ( ABSPATH . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/db_1.sql' ) ) { // Full backup found. 2.0 method.
+				$file_stream = fopen( ABSPATH . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/db_1.sql', 'r' );
 			} elseif ( file_exists ( ABSPATH . '/db_1.sql' ) ) { // DB-only backup found. 2.0 method.
 				$file_stream = fopen( ABSPATH . '/db_1.sql', 'r' );
 			}
@@ -1146,14 +1166,15 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 		 *
 		 *	Migrates the already imported database's content for updates ABSPATH and URL.
 		 *
-		 *	@return		boolean		True=success, False=failed.
+		 *	@return	mixed	boolean		True=success, False=failed or numeric for last table migrated.
 		 *
 		 */
-		function migrate_database() {
+		function migrate_database( $start_table = 0 ) {
 			$this->log( 'Beginning migration of DB.' );
 			$this->log( '_options[] value: ' . serialize( $this->_options ) );
 			$this->time_start = microtime( true ); // WGA added
-      $this->log( 'Migration start time: '. $this->time_start); //WGA added
+      $this->log( 'WGA Migration start time: '. $this->time_start); //WGA added // should be the same as first log time above
+      $this->log( 'WGA max_execution_time is: '. $this->_options['max_execution_time']); 
 			
 			$old_abspath = $this->_backupdata['abspath'];
 			//$old_abspath = str_replace( '\\', '\\\\', $this->_backupdata['abspath'] ); // Remove escaping of windows paths. - Caused problems. REMOVE?
@@ -1198,6 +1219,9 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			while ( $table = mysql_fetch_row( $main_result ) ) {
 				
 				$count_tables_checked++;
+        if ($start_table >= $count_tables_checked) {
+          continue; //WGA this table has already been migrated, move to next iteration of while loop
+        }
 				
 				if ( $table[0] == $this->_options['db_prefix'] . 'posts' ) { // For posts table use SQL statement to do simple string replacement of URLs.
 					echo 'Updating posts table Site URLs... ';
@@ -1302,12 +1326,11 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 
         //WGA check time and see if should return with continue
 			  // If we are half maximum PHP runtime then stop here so that it can be picked up in another PHP process...
-			  if ( ( microtime( true ) - $this->time_start ) >= ($this->_options['max_execution_time']/2) ) {
-				  //$count_tables_checked++;
-						echo ' Exhausted available PHP time to migrate (search/replace) for this page load... Stopped after query ' . $count_tables_checked . '. ';
-						$this->log( 'Database too large to migrate in one pass. Breaking into chunks and continuing at query ' . ( $count_tables_checked ) );
+			  if ( ( microtime( true ) - $this->time_start )*2 >= $this->_options['max_execution_time'] ) {
+						echo ' Exhausted available PHP time to migrate (search/replace) for this page load... Stopped after table ' . $count_tables_checked . '. ';
+						$this->log( 'Database too large to migrate in one pass. Breaking into chunks and continuing at table ' . ( $count_tables_checked ) );
 						
-						return ( $count_tables_checked );
+						return ( $count_tables_checked ); // WGA TODO need skip up to this table when called again.
         }
 			}
 			
@@ -1733,7 +1756,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			if ( 
 			  ( !file_exists ( ABSPATH . '/wp-content/uploads/temp_'.$this->_options['zip_id'].'/backupbuddy_dat.php' ) ) &&
 			  ( !file_exists ( ABSPATH . '/backupbuddy_dat.php' ) ) &&
-			  ( !file_exists ( ABSPATH . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php' ) )
+			  ( !file_exists ( ABSPATH . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php' ) )
 			  ) {
 				$this->alert( 'Highspeed extraction reported success; HOWEVER, key files are missing. Falling back to slower mode to try again.', true );
 				return false;
@@ -1781,7 +1804,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			if ( 
 			  ( !file_exists ( ABSPATH . '/wp-content/uploads/temp_'.$this->_options['zip_id'].'/backupbuddy_dat.php' ) ) &&
 			  ( !file_exists ( ABSPATH . '/backupbuddy_dat.php' ) ) &&
-			  ( !file_exists ( ABSPATH . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php' ) )
+			  ( !file_exists ( ABSPATH . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php' ) )
 			  ) {
 				$this->alert( 'Highspeed extraction reported success; HOWEVER, key files are missing. Falling back to slower mode to try again.', true );
 				return false;
@@ -1814,7 +1837,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			if ( 
 			  ( !file_exists ( ABSPATH . '/wp-content/uploads/temp_'.$this->_options['zip_id'].'/backupbuddy_dat.php' ) ) &&
 			  ( !file_exists ( ABSPATH . '/backupbuddy_dat.php' ) ) &&
-			  ( !file_exists ( ABSPATH . '/wp-content/uploads/backupbuddy_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php' ) )
+			  ( !file_exists ( ABSPATH . '/wp-content/uploads/bb2_temp/' . $this->_options['zip_id'] . '/backupbuddy_dat.php' ) )
 			  ) {
 				$this->alert( 'Highspeed extraction reported success; HOWEVER, key files are missing. Falling back to slower mode to try again.', true );
 				return false;
