@@ -82,6 +82,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 				ezimg::showImg( $_GET['ezimg'] );
 			}
 			
+			//unlink( ABSPATH . '/importbb2_log.txt' ); // WGA added so we get current run only
 			$this->time_start = microtime( true );
 			
 			if ( isset( $_POST['action'] ) && ( $_POST['action'] == 'mysql_test' ) ) {
@@ -180,8 +181,8 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			header( 'Connection: keep-alive' );
 			ini_set( 'default_socket_timeout', '3600' );
 			set_time_limit( '3600' );
-			//ini_set( 'default_socket_timeout', '0' ); //WGA
-			//set_time_limit( '0' ); //WGA
+			ini_set( 'default_socket_timeout', '0' ); //WGA
+			set_time_limit( '0' ); //WGA
       //ini_set('display_errors','Off');//WGA added 
 			
 			// Determine the current step.
@@ -622,6 +623,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 				if (!( isset( $_GET['migrate_continue'] ) && ( is_numeric( $_GET['migrate_continue'] ) ) )) {
 					$_GET['migrate_continue'] = 0;
 				}
+        $this->log("WGA migrate_continue is: ". $_GET['migrate_continue']); //WGA
 				$migrate_result = $this->migrate_database( $_GET['migrate_continue']); //WGA need to allow for continue 
 				if ( true === $migrate_result ) {
           $failed = false;
@@ -632,7 +634,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 					$failed = false;
 					$migration_continue = true;
 					// Continue on table $migrate_result...
-					echo 'Next step will begin import on query ' . $migrate_result . '.<br>';
+					echo 'Next step will begin import on table ' . $migrate_result . '.<br>';
         }
 			} else {
 				$failed = false;
@@ -643,9 +645,9 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
         if ( $migration_continue === true )  {
          //WGA added to continue migration piece here
 					echo '<div class="alert">';
-					echo 'Migration timed out.</div><br><br>';
+					echo 'WGA Migration timed out.</div><br><br>';
 					echo 'Please continue to see if it will complete. This may take a few steps.';
-					echo '<form action="?step=6&db_continue=' . $migrate_result . '" method=post>';
+					echo '<form action="?step=6&migrate_continue=' . $migrate_result . '" method=post>';
 					echo '<input type="hidden" name="options" value="' . htmlspecialchars( serialize( $this->_options ) ) . '" />';
 					echo '<br><br><input type="submit" name="submit" class="button-secondary" value="Continue Migration &raquo" />';
 					echo '</form>';
@@ -1173,8 +1175,7 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			$this->log( 'Beginning migration of DB.' );
 			$this->log( '_options[] value: ' . serialize( $this->_options ) );
 			$this->time_start = microtime( true ); // WGA added
-      $this->log( 'WGA Migration start time: '. $this->time_start); //WGA added // should be the same as first log time above
-      $this->log( 'WGA max_execution_time is: '. $this->_options['max_execution_time']); 
+      $this->log( 'WGA Start now with max_execution_time: '. $this->_options['max_execution_time']); 
 			
 			$old_abspath = $this->_backupdata['abspath'];
 			//$old_abspath = str_replace( '\\', '\\\\', $this->_backupdata['abspath'] ); // Remove escaping of windows paths. - Caused problems. REMOVE?
@@ -1219,9 +1220,13 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 			while ( $table = mysql_fetch_row( $main_result ) ) {
 				
 				$count_tables_checked++;
-        if ($start_table >= $count_tables_checked) {
+        if ($start_table > $count_tables_checked) {
+          $this->log( 'WGA start_table is: '. $table[0] .' #'. $this->table . ' Current_tables_checked: '. $count_tables_checked ); 
           continue; //WGA this table has already been migrated, move to next iteration of while loop
         }
+				echo ' WGA Migrating table: ' . $table[0] ;
+        flush();
+			  $this->log( 'WGA Migrating table: '. $table[0] );
 				
 				if ( $table[0] == $this->_options['db_prefix'] . 'posts' ) { // For posts table use SQL statement to do simple string replacement of URLs.
 					echo 'Updating posts table Site URLs... ';
@@ -1326,12 +1331,12 @@ if ( !class_exists( 'PluginBuddyImportBuddy' ) ) {
 
         //WGA check time and see if should return with continue
 			  // If we are half maximum PHP runtime then stop here so that it can be picked up in another PHP process...
-			  if ( ( microtime( true ) - $this->time_start )*2 >= $this->_options['max_execution_time'] ) {
-						echo ' Exhausted available PHP time to migrate (search/replace) for this page load... Stopped after table ' . $count_tables_checked . '. ';
-						$this->log( 'Database too large to migrate in one pass. Breaking into chunks and continuing at table ' . ( $count_tables_checked ) );
+			  // WGA for now stop at every table -- if ( ( microtime( true ) - $this->time_start )*2 >= $this->_options['max_execution_time'] ) {
+						echo ' WGA Exhausted available PHP time to migrate (search/replace) for this page load... Stopped after table ' . $count_tables_checked . '. ';
+						$this->log( 'WGA Database too large to migrate in one pass. Breaking into chunks and continuing at table ' . ( $count_tables_checked ) );
 						
-						return ( $count_tables_checked ); // WGA TODO need skip up to this table when called again.
-        }
+						return ( $count_tables_checked+1 ); // WGA TODO need skip up to this table when called again.
+        //}
 			}
 			
 			unset( $main_result );
